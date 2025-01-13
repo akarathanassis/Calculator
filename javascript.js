@@ -1,20 +1,23 @@
 let expression = []; 
 let currentValue = ""; 
 
+const display = document.querySelector(".display"); 
+
 const buttons = document.querySelectorAll("button"); 
 buttons.forEach((button) => { 
     button.addEventListener("click", () => {
         if (button.getHTML() === "=") { 
-            console.log(evaluateExpression(expression));
+            let result = evaluateExpression(expression);
+            display.textContent = result; 
             expression = []; 
         }
         else if (button.getHTML() === "AC") { 
             expression = []; 
-            console.log(expression); 
+            display.textContent = "0"; 
         }
         else {
         expression.push(button.getHTML());
-        console.log(expression);     
+        display.textContent = expression.join(" ");     
         }
        
     })
@@ -55,7 +58,7 @@ function operation(num1, operator, num2) {
         case "-": 
             return subtract(num1, num2); 
             break; 
-        case "*": 
+        case "x": 
             return multiply(num1, num2); 
             break; 
         case "/": 
