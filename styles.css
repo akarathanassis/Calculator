@@ -3,13 +3,14 @@ body {
     justify-content: center;
     align-items: center;
     background-color: black;
+    font-family: sans-serif;
 }
 
 #calculator {
     display: flex;
     flex-direction: column;
-    width: 600px;
-    height: 750px;
+    width: 650px;
+    height: 800px;
     border: black solid; 
 }
 
@@ -17,15 +18,18 @@ body {
     width: 600px; 
     height: 150px;
     box-sizing: border-box;
-    text-align: right;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 75px;
 }
 
 .keypad { 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
+    gap: 5px; 
 }
 
 button { 
@@ -33,7 +37,9 @@ button {
     width: 150px;
     height: 150px; 
     font-size: large;
-    background-color: lightgrey;
+    background-color: grey;
+    border-radius: 50%;
+    border: none; 
 }
 
 button.operator { 
@@ -45,7 +51,7 @@ button.operator {
 }
 
 button:active { 
-    background-color: grey;
+    background-color: lightgrey;
 }
 
 button.operator:active { 
