@@ -4,6 +4,7 @@ body {
     align-items: center;
     background-color: black;
     font-family: sans-serif;
+    zoom: 90%;
 }
 
 #calculator {
@@ -50,6 +51,16 @@ button.operator {
     height: 150px; 
     font-size: large;
     background-color: orange;
+}
+
+button#clear { 
+    width: 450px;
+    border-radius: 100px;
+}
+
+button#zero { 
+    width: 300px; 
+    border-radius: 100px;
 }
 
 button:active { 

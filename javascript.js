@@ -1,3 +1,33 @@
+let expression = []; 
+let currentValue = ""; 
+
+const buttons = document.querySelectorAll("button"); 
+buttons.forEach((button) => { 
+    button.addEventListener("click", () => {
+        if (button.getHTML() === "=") { 
+            console.log(evaluateExpression(expression));
+            expression = []; 
+        }
+        else if (button.getHTML() === "AC") { 
+            expression = []; 
+            console.log(expression); 
+        }
+        else {
+        expression.push(button.getHTML());
+        console.log(expression);     
+        }
+       
+    })
+})
+
+function checkOperator(operator) { 
+    return ["+", "-", "/", "*"].includes(operator); 
+}
+
+function evaluateExpression(expression) { 
+    return operation(Number(expression[0]), expression[1], Number(expression[2])); 
+}
+
 function add(num1, num2) { 
     return num1 + num2
 }
@@ -17,7 +47,7 @@ function divide(num1, num2) {
     return num1 / num2
 }
 
-function operation(num1, num2, operator) { 
+function operation(num1, operator, num2) { 
     switch (operator) { 
         case "+":  
             return add(num1, num2); 
@@ -35,12 +65,4 @@ function operation(num1, num2, operator) {
             return "Please enter a valid operator (+, -, *, /)"
     }
 }
-
-let num1 = Number(prompt("Enter Number 1: ")); 
-let num2 = Number(prompt("Enter Number 2: ")); 
-let operator = prompt("Enter an operation (+, -, *, /): "); 
-
-console.log(operator); 
-
-console.log(operation(num1, num2, operator)); 
 
