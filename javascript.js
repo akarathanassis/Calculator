@@ -24,7 +24,8 @@ buttons.forEach((button) => {
             // or, we clicked the equals sign, so have to evaluate the expression
             else { 
                 expression.push(currentValue); 
-                let result = operation(expression[0], expression[1], expression[2]);
+                console.log(expression); 
+                let result = calcExpression(expression); 
                 display.textContent = result.toLocaleString();  
                 currentValue = result; 
                 expression = []; 
@@ -46,6 +47,7 @@ buttons.forEach((button) => {
             currentValue = ""; 
             display.textContent += input.toLocaleString(); 
         }
+        console.log(expression); 
     })
 })
 
@@ -58,7 +60,7 @@ function evaluateExpression(expression) {
 }
 
 function add(num1, num2) { 
-    return num1 + num2
+    return Number(num1) + Number(num2)
 }
 
 function subtract(num1, num2) { 
@@ -70,8 +72,8 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) { 
-    if (num2 === 0) { 
-        return "Error"
+    if (num2 === "0") { 
+        return "Undefined"
     }
     return num1 / num2
 }
@@ -95,3 +97,25 @@ function operation(num1, operator, num2) {
     }
 }
 
+function calcExpression(expression) { 
+    // first value will always be a value, set this to current 
+    let currentValue = expression[0]; 
+    let currentOperator = ""; 
+    for (let i=1; i < expression.length; i++) { 
+        // every odd index will be an operator 
+        if (i%2 != 0) { 
+            currentOperator = expression[i]; 
+            continue
+        }
+        // otherwise we have a number 
+        else { 
+            // if we have a stored operator we need to evaluate the sub-expression
+            if (currentOperator) { 
+                currentValue = operation(currentValue, currentOperator, expression[i]); 
+                // set the operator to empty string 
+                currentOperator = ""; 
+            }
+        }
+    }
+    return currentValue
+}
