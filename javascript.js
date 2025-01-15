@@ -23,12 +23,15 @@ buttons.forEach((button) => {
             }
             // or, we clicked the equals sign, so have to evaluate the expression
             else { 
-                expression.push(currentValue); 
-                console.log(expression); 
-                let result = calcExpression(expression); 
-                display.textContent = result.toLocaleString();  
-                currentValue = result; 
-                expression = []; 
+                // but we have to check if we've inputted a valid expression first
+                if (currentValue) { 
+                    expression.push(currentValue); 
+                    console.log(expression); 
+                    let result = calcExpression(expression); 
+                    display.textContent = result.toLocaleString();  
+                    currentValue = result; 
+                    expression = [];     
+                }
             }
         }
         // now, clear everything if AC is clicked
