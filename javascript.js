@@ -6,20 +6,6 @@ const display = document.querySelector(".display");
 const buttons = document.querySelectorAll("button"); 
 buttons.forEach((button) => { 
     button.addEventListener("click", () => {
-        // if (button.getHTML() === "=") { 
-        //     let result = evaluateExpression(expression);
-        //     display.textContent = result; 
-        //     expression = []; 
-        // }
-        // else if (button.getHTML() === "AC") { 
-        //     expression = []; 
-        //     display.textContent = "0"; 
-        // }
-        // else {
-        //     if ()
-        //     expression.push(button.getHTML());
-        //     display.textContent = expression.join(" ");     
-        // }
 
         let input = button.getHTML(); 
         // first check if we are inputting an operator
@@ -29,18 +15,26 @@ buttons.forEach((button) => {
                 // we clicked a number or the decimal, so add to currentValue
                 currentValue += input; 
                 if (display.textContent.trim() === "0") { 
-                    display.textContent = input;    
+                    display.textContent = input.toLocaleString();    
                 }
                 else { 
-                    display.textContent += input;  
+                    display.textContent += input.toLocaleString();  
                 }
             }
-            console.log(currentValue); 
+            // or, we clicked the equals sign, so have to evaluate the expression
+            else { 
+                expression.push(currentValue); 
+                let result = operation(expression[0], expression[1], expression[2]);
+                display.textContent = result.toLocaleString();  
+                currentValue = result; 
+                expression = []; 
+            }
         }
         // now, clear everything if AC is clicked
         else if (input === "AC") { 
             currentValue = ""; 
             display.textContent = "0"; 
+            expression = []; 
         }
         // otherwise, we clicked an operator
         else { 
@@ -50,10 +44,8 @@ buttons.forEach((button) => {
             expression.push(input); 
             // and set the currentValue to empty to begin second number input
             currentValue = ""; 
-            display.textContent += input; 
+            display.textContent += input.toLocaleString(); 
         }
-
-       
     })
 })
 
