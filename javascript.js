@@ -79,14 +79,14 @@ function subtract(num1, num2) {
 }
 
 function multiply(num1, num2) { 
-    return String(num1 * num2)
+    return String(roundToDecimals(num1 * num2, 8))
 }
 
 function divide(num1, num2) { 
     if (num2 === "0") { 
         return "Undefined"
     }
-    return String(num1 / num2)
+    return String(roundToDecimals(num1 / num2, 8))
 }
 
 function operation(num1, operator, num2) { 
@@ -129,4 +129,9 @@ function calcExpression(expression) {
         }
     }
     return currentValue
+}
+
+function roundToDecimals(number, decimals) {
+    const factor = Math.pow(10, decimals);
+    return Math.round(number * factor) / factor;
 }
