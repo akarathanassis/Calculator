@@ -8,6 +8,7 @@ buttons.forEach((button) => {
     button.addEventListener("click", () => {
 
         let input = button.getHTML(); 
+        console.log(currentValue); 
         // check for double floating point input 
         if (!((input === ".") && currentValue.includes("."))) { 
             // first check if we are inputting an operator
@@ -17,11 +18,12 @@ buttons.forEach((button) => {
                     // if we input a floating point first then add a zero for style
                     if ((input === ".") && (currentValue === "")) { 
                         input = "0."; 
+                        console.log(input); 
                     } 
                     // we clicked a number or the decimal, so add to currentValue
-                    currentValue += input;     
+                    currentValue += input;    
                     if (display.textContent.trim() === "0") { 
-                        display.textContent = input.toLocaleString();    
+                        display.textContent = currentValue.toLocaleString();    
                     }
                     else { 
                         display.textContent += input.toLocaleString();  
@@ -56,7 +58,6 @@ buttons.forEach((button) => {
                 currentValue = ""; 
                 display.textContent += input.toLocaleString(); 
             }
-            console.log(expression); 
         }
     })
 })
