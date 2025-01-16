@@ -1,8 +1,3 @@
-// LAST BUGFIX FOR TOMORROW: FLOATING POINT BUGS WITH MULTIPLE FLOATING POINTS 
-// AND EXPRESSIONS WITH ONLY FLOATING POINTS AND OPERATORS
-
-
-
 let expression = []; 
 let currentValue = ""; 
 
@@ -13,49 +8,56 @@ buttons.forEach((button) => {
     button.addEventListener("click", () => {
 
         let input = button.getHTML(); 
-        // first check if we are inputting an operator
-        if (!checkOperator(input)) { 
-            // we're not, so either a number or =. If num, add to currentValue
-            if (!(input === "=")) { 
-                // we clicked a number or the decimal, so add to currentValue
-                currentValue += input; 
-                if (display.textContent.trim() === "0") { 
-                    display.textContent = input.toLocaleString();    
+        // check for double floating point input 
+        if (!((input === ".") && currentValue.includes("."))) { 
+            // first check if we are inputting an operator
+            if (!checkOperator(input)) { 
+                // we're not, so either a number or =. If num, add to currentValue
+                if (!(input === "=")) { 
+                    // if we input a floating point first then add a zero for style
+                    if ((input === ".") && (currentValue === "")) { 
+                        input = "0."; 
+                    } 
+                    // we clicked a number or the decimal, so add to currentValue
+                    currentValue += input;     
+                    if (display.textContent.trim() === "0") { 
+                        display.textContent = input.toLocaleString();    
+                    }
+                    else { 
+                        display.textContent += input.toLocaleString();  
+                    }
                 }
+                // or, we clicked the equals sign, so have to evaluate the expression
                 else { 
-                    display.textContent += input.toLocaleString();  
+                    // but we have to check if we've inputted a valid expression first
+                    if (currentValue) { 
+                        expression.push(currentValue); 
+                        console.log(expression); 
+                        let result = calcExpression(expression); 
+                        display.textContent = result.toLocaleString();  
+                        currentValue = result; 
+                        expression = [];     
+                    }
                 }
             }
-            // or, we clicked the equals sign, so have to evaluate the expression
+            // now, clear everything if AC is clicked
+            else if (input === "AC") { 
+                currentValue = ""; 
+                display.textContent = "0"; 
+                expression = []; 
+            }
+            // otherwise, we clicked an operator
             else { 
-                // but we have to check if we've inputted a valid expression first
-                if (currentValue) { 
-                    expression.push(currentValue); 
-                    console.log(expression); 
-                    let result = calcExpression(expression); 
-                    display.textContent = result.toLocaleString();  
-                    currentValue = result; 
-                    expression = [];     
-                }
+                // first push the currentValue to the expression
+                expression.push(currentValue); 
+                // then push the operator we clicked to the expression
+                expression.push(input); 
+                // and set the currentValue to empty to begin second number input
+                currentValue = ""; 
+                display.textContent += input.toLocaleString(); 
             }
+            console.log(expression); 
         }
-        // now, clear everything if AC is clicked
-        else if (input === "AC") { 
-            currentValue = ""; 
-            display.textContent = "0"; 
-            expression = []; 
-        }
-        // otherwise, we clicked an operator
-        else { 
-            // first push the currentValue to the expression
-            expression.push(currentValue); 
-            // then push the operator we clicked to the expression
-            expression.push(input); 
-            // and set the currentValue to empty to begin second number input
-            currentValue = ""; 
-            display.textContent += input.toLocaleString(); 
-        }
-        console.log(expression); 
     })
 })
 
